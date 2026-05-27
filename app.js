@@ -335,7 +335,7 @@ async function updateOnline() {
   try {
     const res = await fetch('/api/online');
     const data = await res.json();
-    el.onlineBadge.textContent = data.count + ' en ligne';
+    el.onlineBadge.textContent = data.count;
   } catch (e) {}
 }
 
