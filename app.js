@@ -26,6 +26,7 @@ const el = {
   settingsBtn: $('#settingsBtn'),
   headerTitle: $('#headerTitle'),
   headerStatus: $('#headerStatus'),
+  onlineBadge: $('#onlineBadge'),
   welcome: $('#welcome'),
   messages: $('#messages'),
   msgArea: $('#messagesArea'),
@@ -329,6 +330,17 @@ function updateStatus() {
   el.headerStatus.textContent = hasKey ? 'Prêt' : 'Clé API manquante';
   el.headerStatus.className = 'header-status' + (hasKey ? ' online' : '');
 }
+
+async function updateOnline() {
+  try {
+    const res = await fetch('/api/online');
+    const data = await res.json();
+    el.onlineBadge.textContent = data.count + ' en ligne';
+  } catch (e) {}
+}
+
+setInterval(updateOnline, 30000);
+updateOnline();
 
 async function send() {
   const text = el.input.value.trim();

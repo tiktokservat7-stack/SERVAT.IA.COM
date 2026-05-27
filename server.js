@@ -40,6 +40,7 @@ const PROVIDERS = {
 
 let conversations = {};
 let convCounters = {};
+const userActivity = {};
 
 function userDir(userId) {
   return path.join(DATA_DIR, userId);
@@ -106,6 +107,8 @@ app.post('/api/chat', async (req, res) => {
   }
 
   if (!userId) return res.status(400).json({ error: 'userId requis' });
+
+  userActivity[userId] = Date.now();
 
   const userConvs = getOrCreateUser(userId);
   const prov = PROVIDERS[provider] || PROVIDERS.groq;
@@ -283,6 +286,20 @@ app.post('/api/chat', async (req, res) => {
     }
   }
   res.end();
+});
+
+// Nettoyer les utilisateurs inactifs toutes les minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const uid in userActivity) {
+    if (now - userActivity[uid] > 300000) delete userActivity[uid];
+  }
+}, 60000);
+
+app.get('/api/online', (req, res) => {
+  const now = Date.now();
+  const count = Object.values(userActivity).filter(t => now - t < 300000).length;
+  res.json({ count });
 });
 
 app.get('/api/providers', (req, res) => {

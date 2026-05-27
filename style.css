@@ -97,6 +97,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);height:100vh
 .header-status{font-size:11px;color:var(--text3)}
 .header-status.online{color:var(--success)}
 .header-status.busy{color:var(--accent2)}
+.online-badge{font-size:10px;color:var(--success);white-space:nowrap;margin-left:8px}
 .header-actions{display:flex;gap:4px}
 
 /* Messages */
@@ -315,6 +316,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);height:100vh
   .chat-header{padding:6px 12px;gap:8px}
   .header-title{font-size:13px}
   .header-status{font-size:10px}
+  .online-badge{font-size:9px;margin-left:4px}
   .input-area{padding:6px 10px 8px}
   .input-bar{padding:4px 4px 4px 12px}
   .input-bar textarea{font-size:13px}
