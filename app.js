@@ -499,7 +499,7 @@ function scrollBottom() {
 }
 
 async function newChat() {
-  if (state.streaming) return;
+  state.streaming = false;
   try {
     const res = await fetch('/api/new', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: state.userId }) });
     const d = await res.json();
