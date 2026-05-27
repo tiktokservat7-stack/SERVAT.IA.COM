@@ -97,9 +97,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);height:100vh
 .header-status{font-size:11px;color:var(--text3)}
 .header-status.online{color:var(--success)}
 .header-status.busy{color:var(--accent2)}
-.header-actions{display:flex;align-items:center;gap:4px}
-.online-badge{font-size:13px;color:var(--success);background:rgba(34,197,94,0.1);padding:3px 10px;border-radius:12px;white-space:nowrap;display:flex;align-items:center;gap:5px}
-.online-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--success);display:inline-block}
+.header-actions{display:flex;gap:4px}
 
 /* Messages */
 .messages-area{flex:1;overflow-y:auto;overflow-x:hidden}
@@ -317,7 +315,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);height:100vh
   .chat-header{padding:6px 12px;gap:8px}
   .header-title{font-size:13px}
   .header-status{font-size:10px}
-  .online-badge{font-size:9px;padding:1px 5px}
   .input-area{padding:6px 10px 8px}
   .input-bar{padding:4px 4px 4px 12px}
   .input-bar textarea{font-size:13px}
