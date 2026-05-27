@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SERVAT IA - Assistant Intelligent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        SERVAT IA
+      </div>
+      <button class="btn btn-primary" id="newChatBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Nouveau chat
+      </button>
+    </div>
+    <div class="conv-list" id="convList"></div>
+    <div class="sidebar-footer">
+      <button class="btn btn-ghost" id="settingsBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        Configuration
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="chat-header">
+      <button class="menu-btn" id="menuBtn">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="header-info">
+        <span class="header-title" id="headerTitle">SERVAT IA</span>
+        <span class="header-status" id="headerStatus">Prêt</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn-icon" id="clearChatBtn" title="Effacer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="messages-area" id="messagesArea">
+      <div class="welcome" id="welcome">
+        <div class="welcome-icon">
+          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h1>Que puis-je créer pour vous ?</h1>
+        <p class="welcome-sub">Code, scripts, analyses, explications — je suis là pour vous aider.</p>
+        <div class="quick-actions">
+          <div class="qa-card" data-prompt="Écris un script Python complet avec pandas, matplotlib et seaborn pour analyser un fichier CSV, générer des graphiques et exporter un rapport PDF">
+            <span class="qa-icon">🐍</span>
+            <span>Analyse CSV complète</span>
+          </div>
+          <div class="qa-card" data-prompt="Crée une API REST complète avec Node.js, Express et MongoDB avec CRUD, authentification JWT, pagination et documentation Swagger">
+            <span class="qa-icon">🌐</span>
+            <span>API Node.js complète</span>
+          </div>
+          <div class="qa-card" data-prompt="Écris un script bash pour automatiser le déploiement Docker d'une application full-stack avec backup, monitoring et rollback">
+            <span class="qa-icon">🐳</span>
+            <span>Déploiement Docker</span>
+          </div>
+          <div class="qa-card" data-prompt="Explique le fonctionnement des transformers en deep learning avec des schémas textuels et des exemples de code PyTorch détaillés">
+            <span class="qa-icon">🧠</span>
+            <span>Transformers expliqués</span>
+          </div>
+        </div>
+      </div>
+      <div id="messages" class="messages"></div>
+    </div>
+
+    <div class="input-area">
+      <div class="input-bar" id="inputBar">
+        <textarea id="input" rows="1" placeholder="Écrivez votre message..." autofocus></textarea>
+        <button class="send-btn" id="sendBtn" disabled>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Configuration</h2>
+      <button class="modal-close" id="settingsClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Clé API</label>
+        <div class="input-group">
+          <input type="password" id="apiKeyInput" placeholder="Entrez votre clé API..." autocomplete="off">
+          <button class="btn-icon" id="toggleKeyBtn" title="Afficher/Masquer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Fournisseur</label>
+        <select id="providerSelect"></select>
+      </div>
+      <div class="form-group">
+        <label>Modèle</label>
+        <select id="modelSelect"></select>
+      </div>
+      <div class="form-info">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <span>Clés gratuites : <a href="https://console.groq.com/keys" target="_blank">Groq</a> • <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI</a> • <a href="https://platform.deepseek.com" target="_blank">DeepSeek</a></span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="settingsCancel">Annuler</button>
+      <button class="btn btn-primary" id="settingsSave">Sauvegarder</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
